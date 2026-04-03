@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-50 text-gray-900;
+}
+
+.sidebar {
+  @apply fixed left-0 top-0 h-full w-64 bg-military-900 text-white;
+}
+
+.main-content {
+  @apply ml-64 min-h-screen;
+}

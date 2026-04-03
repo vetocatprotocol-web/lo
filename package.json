@@ -1,0 +1,25 @@
+{
+  "name": "military-attendance-system",
+  "version": "1.0.0",
+  "description": "Modular Military Attendance System (QR-based, high-security, configurable)",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "format": "turbo run format",
+    "type-check": "turbo run type-check",
+    "clean": "turbo run clean && rm -rf node_modules && rm -rf pnpm-lock.yaml",
+    "db:setup": "cd prisma && node scripts/setup.ts",
+    "db:seed": "cd prisma && npx prisma db seed",
+    "db:clean": "cd prisma && node scripts/clean.ts"
+  },
+  "devDependencies": {
+    "turbo": "^1.10.16"
+  },
+  "packageManager": "pnpm@8.10.2"
+}

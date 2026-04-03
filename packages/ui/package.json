@@ -1,0 +1,7 @@
+{
+  "name": "@mas/ui",
+  "version": "1.0.0",
+  "exports": {
+    ".": "./components/index.ts"
+  }
+}

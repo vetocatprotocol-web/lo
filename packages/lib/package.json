@@ -1,0 +1,21 @@
+{
+  "name": "@mas/lib",
+  "version": "1.0.0",
+  "main": "./dist/utils/index.js",
+  "types": "./dist/utils/index.d.ts",
+  "scripts": {
+    "build": "npx tsc",
+    "dev": "npx tsc --watch",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.39"
+  },
+  "exports": {
+    ".": "./dist/utils/index.js",
+    "./hash": "./dist/utils/hash.js",
+    "./validation": "./dist/utils/validation.js",
+    "./encryption": "./dist/utils/encryption.js",
+    "./detection": "./dist/utils/detection.js"
+  }
+}

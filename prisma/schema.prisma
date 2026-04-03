@@ -1,0 +1,135 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Core Models
+model User {
+  id            String    @id @default(cuid())
+  nrp           String    @unique // Military Registration Number
+  name          String
+  rank          String
+  unit          String
+  pin           String    // Hashed PIN
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  devices       Device[]
+  activities    ActivityLog[]
+  imports       ImportLog[]
+
+  @@map("users")
+}
+
+model Device {
+  id              String    @id @default(cuid())
+  userId          String
+  deviceId        String    @unique // Device UUID/Fingerprint
+  deviceModel     String
+  osVersion       String
+  isActive        Boolean   @default(true)
+  bindedAt        DateTime  @default(now())
+  lastSeen        DateTime  @default(now())
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  activities      ActivityLog[]
+
+  @@index([userId])
+  @@map("devices")
+}
+
+model ActivityLog {
+  id                  String    @id @default(cuid())
+  userId              String
+  deviceId            String
+  timestamp           DateTime  @default(now())
+  latitude            Float
+  longitude           Float
+  accuracy            Float
+  attendanceStatus    String    // 'present' | 'absent' | 'late' | 'early_leave'
+  detectionStatus     String    // 'normal' | 'suspicious' | 'blocked'
+  detectionDetails    String?   // JSON stringified
+  ipAddress           String
+  userAgent           String
+  isVerified          Boolean   @default(false)
+  createdAt           DateTime  @default(now())
+
+  // Relations
+  user                User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  device              Device    @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([deviceId])
+  @@index([timestamp])
+  @@map("activity_logs")
+}
+
+model QRToken {
+  id          String    @id @default(cuid())
+  token       String    @unique
+  isActive    Boolean   @default(true)
+  expiresAt   DateTime
+  createdAt   DateTime  @default(now())
+
+  @@index([expiresAt])
+  @@map("qr_tokens")
+}
+
+model SystemConfig {
+  id            String    @id @default(cuid())
+  key           String    @unique
+  value         String    // JSON stringified config
+  description   String?
+  updatedAt     DateTime  @updatedAt
+  updatedBy     String?
+
+  @@map("system_configs")
+}
+
+model ImportLog {
+  id            String    @id @default(cuid())
+  userId        String
+  mode          String    // 'overwrite' | 'skip_duplicates'
+  totalRecords  Int
+  successCount  Int
+  failureCount  Int
+  errors        String    // JSON array stringified
+  createdAt     DateTime  @default(now())
+
+  // Relations
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("import_logs")
+}
+
+// Audit Log Model
+model AuditLog {
+  id            String    @id @default(cuid())
+  action        String    // e.g., 'USER_LOGIN', 'DEVICE_BIND', 'CONFIG_UPDATE'
+  userId        String?
+  resourceType  String?   // e.g., 'User', 'Device', 'Config'
+  resourceId    String?
+  changes       String?   // JSON stringified before/after
+  ipAddress     String?
+  userAgent     String?
+  createdAt     DateTime  @default(now())
+
+  @@index([action])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}

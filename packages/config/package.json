@@ -1,0 +1,8 @@
+{
+  "name": "@mas/config",
+  "version": "1.0.0",
+  "exports": {
+    "./eslint": "./eslint-config/index.js",
+    "./prettier": "./prettier.config.js"
+  }
+}

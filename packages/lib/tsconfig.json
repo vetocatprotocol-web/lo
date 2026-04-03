@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "moduleResolution": "bundler",
+    "types": ["node"],
+    "paths": {
+      "@mas/*": ["../*"]
+    }
+  },
+  "include": ["utils/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

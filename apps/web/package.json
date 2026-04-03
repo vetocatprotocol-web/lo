@@ -1,0 +1,39 @@
+{
+  "name": "@mas/web",
+  "version": "1.0.0",
+  "description": "Admin Dashboard for Military Attendance System",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "lint": "eslint . --ext .ts,.tsx",
+    "format": "prettier --write .",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "axios": "^1.5.0",
+    "socket.io-client": "^4.6.0",
+    "zustand": "^4.4.0",
+    "@mas/types": "*",
+    "@mas/constants": "*",
+    "@mas/lib": "*",
+    "@mas/ui": "*",
+    "lucide-react": "^0.263.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.40.0",
+    "eslint-config-next": "^14.0.0",
+    "prettier": "^3.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "postcss": "^8.4.0",
+    "tailwindcss": "^3.3.0"
+  }
+}

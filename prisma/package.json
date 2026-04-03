@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "seed": "node --loader ts-node/esm --no-warnings seed.ts"
+  },
+  "prisma": {
+    "seed": "ts-node seed.ts"
+  },
+  "devDependencies": {
+    "prisma": "5.22.0"
+  },
+  "dependencies": {
+    "@prisma/client": "5.22.0"
+  }
+}
